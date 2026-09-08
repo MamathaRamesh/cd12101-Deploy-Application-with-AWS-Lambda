@@ -1,10 +1,11 @@
+import AWSXRay from 'aws-xray-sdk-core'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, PutCommand, QueryCommand, UpdateCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb'
 import { createLogger } from '../utils/logger.mjs'
 
 const logger = createLogger('todosAccess')
 
-const client = new DynamoDBClient()
+const client = AWSXRay.captureAWSv3Client(new DynamoDBClient())
 const docClient = DynamoDBDocumentClient.from(client)
 
 const todosTable = process.env.TODOS_TABLE

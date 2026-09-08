@@ -77,8 +77,7 @@ export function Todos() {
   async function onTodoDelete(todoId) {
     try {
       const accessToken = await getAccessTokenSilently({
-       audience: `https://todo-api`
-        // scope: 'delete:todo'
+        audience: `https://todo-api`
       })
       await deleteTodo(accessToken, todoId)
       setTodos(todos.filter((todo) => todo.todoId !== todoId))
@@ -91,8 +90,7 @@ export function Todos() {
     try {
       const todo = todos[pos]
       const accessToken = await getAccessTokenSilently({
-        audience: `https://todo-api`,
-        scope: 'write:todo'
+        audience: `https://todo-api`
       })
       await patchTodo(accessToken, todo.todoId, {
         name: todo.name,
@@ -106,7 +104,7 @@ export function Todos() {
       )
     } catch (e) {
       console.log('Failed to check a TODO', e)
-      alert('Todo deletion failed')
+      alert('Todo update failed')
     }
   }
 
@@ -129,7 +127,6 @@ export function Todos() {
       try {
         const accessToken = await getAccessTokenSilently({
           audience: `https://todo-api`
-          // scope: 'read:todos'
         })
         console.log('Access token: ' + accessToken)
         const todos = await getTodos(accessToken)
